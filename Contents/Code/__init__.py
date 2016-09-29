@@ -85,7 +85,7 @@ def MainMenu():
         oc = ObjectContainer(title2=L('livetv'))
 
         channels = Tvheadend.Channels()
-        channels.sort(key=lambda channel: channel['number'])
+        channels.sort(key=lambda channel: float(channel['number']))
         maxNum = max(channels, key=lambda channel: channel['number'])['number']
 
         Dict['channels'] = dict()
