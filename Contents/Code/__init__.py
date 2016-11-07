@@ -128,7 +128,10 @@ def Channel(channelId, container=False):
         tagline = epg['title']
 
     if Prefs['displayChannelIcons'] and 'icon_public_url' in channel:
-        thumb = Dict['url'] + '/' + channel['icon_public_url']
+        if channel['icon_public_url'].startswith('http'):
+            thumb = channel['icon_public_url']
+        else:
+            thumb = Dict['url'] + '/' + channel['icon_public_url']
 
     if 'stop' in epg:
         remaining_duration = (epg['stop'] - int(Datetime.TimestampFromDatetime(Datetime.Now())) + DURATION_ADDED) * 1000
@@ -203,7 +206,11 @@ class Tvheadend(object):
             '/api/epg/events/grid',
             values=dict(start=0, limit=channelCount)
         )['entries']
-        return dict((channel['channelUuid'], channel) for channel in entries)
+        epg = dict()
+        for channel in entries:
+            if not channel['channelUuid'] in epg:
+                epg[channel['channelUuid']] = channel
+        return epg
 
     @staticmethod
     def fetch(path, headers=dict(), values=None):
