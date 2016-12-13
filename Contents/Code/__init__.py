@@ -128,7 +128,7 @@ def Channel(channelId, container=False):
         tagline = epg['title']
 
     if Prefs['displayChannelIcons'] and 'icon_public_url' in channel:
-        thumb = Dict['url'] + '/' + channel['icon_public_url']
+        thumb = channel['icon_public_url']
 
     if 'stop' in epg:
         remaining_duration = (epg['stop'] - int(Datetime.TimestampFromDatetime(Datetime.Now())) + DURATION_ADDED) * 1000
@@ -160,6 +160,9 @@ def Channel(channelId, container=False):
         items=[
             MediaObject(
                 optimized_for_streaming=True,
+                video_resolution = 1080,
+                video_codec=VideoCodec.H264,
+                audio_codec=AudioCodec.AAC,
                 container=CONTAINER,
                 parts=[
                     PartObject(
