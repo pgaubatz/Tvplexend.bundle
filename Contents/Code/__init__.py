@@ -104,7 +104,7 @@ def MainMenu():
 
 
 @route(PREFIX + '/{channelId}')
-def Channel(channelId, container=False):
+def Channel(channelId, container=False, includeBandwidths=None):
     channel = Dict['channels'][channelId]
     epg = Dict['epg'][channelId] if channelId in Dict['epg'] else dict()
 
