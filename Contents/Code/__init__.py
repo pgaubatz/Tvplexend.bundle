@@ -177,7 +177,7 @@ def Channel(channelId, container=False):
 
 
 @route(PREFIX + '/{channelId}/livestream')
-def StreamChannel(channelId):
+def StreamChannel(channelId, **dummy):
     url = '%s/stream/channel/%s?profile=pass' % (Dict['url'], channelId)
     return Redirect(url)
 
